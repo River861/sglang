@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=0 -->
+<!-- METADATA:SESSION=1 -->
 
 ## Session 0
 
@@ -13,3 +13,10 @@
 - 创建飞书主体文档 2：SGLang 架构学习指南 2：核心模块逐文件笔记：https://feishu.cn/docx/Cg5bdBxyWourzrxKXzWctWKAnOg
 - 创建飞书主体文档 3：SGLang 架构学习指南 3：DeepSeek V4 分支专项：https://feishu.cn/docx/GtLMdr4EvoSRaQxzS4zcGmrMnuh
 - 已用 `get_doc.py --format text` 读回索引文档，确认链接和目录已写入
+
+## Session 1
+
+- 诊断本机 Claude Code 未响应问题：`claude -p '只回复 OK'` 超时，debug 日志显示请求被发往 `ANTHROPIC_BASE_URL=http://10.100.193.54:8006` 后持续重试。
+- 确认 API key/网关链路可用：`/health` 和 `/v1/models` 均正常，`claude-sonnet-4-6` 与 `claude-opus-4-7` 精确模型均能返回 `OK`。
+- 定位根因：`~/.claude/settings.json` 中 `"model": "opus"` 被 Claude Code 解析为 `claude-opus-4-8`，但当前网关模型列表没有该模型，返回 `model_not_found`，因此表现为长时间无响应。
+- 修复方式：将本机 `~/.claude/settings.json` 的默认模型改为网关支持的 `claude-opus-4-7`，并用默认 `claude -p` 复测返回 `OK`。
