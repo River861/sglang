@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes
 
-<!-- METADATA:STATUS=Open,ASSIGNEE= -->
+<!-- METADATA:STATUS=InProgress,ASSIGNEE=intern_sglang_learner -->
 
 ## 背景
 
