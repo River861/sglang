@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=7 -->
+<!-- METADATA:SESSION=8 -->
 
 ## Session 0
 
@@ -49,3 +49,10 @@
 ## Session 7
 
 - 响应用户在线确认，继续保持简洁答复模式。
+
+## Session 8
+
+- 诊断 VS Code Codex 插件报错 `Missing environment variable: LB_API_KEY`。
+- 确认 `/root/.codex/config.toml` 使用 `model_provider = "lb"`，该 provider 的 `env_key` 要求插件进程环境中存在 `LB_API_KEY`。
+- 发现 `LB_API_KEY` 已写在 shell 启动文件中，但 `.bashrc` 对非交互 shell 会提前返回，VS Code 远程扩展进程未继承该变量。
+- 已创建 `/root/.vscode-server-insiders/server-env-setup` 和 `/root/.vscode-server/server-env-setup`，从现有 shell 配置导入 `LB_API_KEY`，不复制密钥明文；需要重启远程 VS Code Server 或重新连接窗口后生效。
