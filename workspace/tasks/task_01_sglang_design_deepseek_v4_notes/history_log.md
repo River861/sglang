@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=10 -->
+<!-- METADATA:SESSION=11 -->
 
 ## Session 0
 
@@ -68,3 +68,10 @@
 - 失败来源是历史 `PR Test Extra` workflow：该 workflow 会在 PR push 时启动，并在缺少 `run-ci-extra` 标签时由 `call-gate / pr-gate` 失败，从而触发 GitHub 失败邮件。
 - 当前 PR 只有 `documentation` 标签，没有 `run-ci`/`run-ci-extra`；PR 已关闭后该 PR 不会再因为后续分支 push 触发新的 PR workflow。
 - 尝试取消当前用户对 issue/PR #1 的显式订阅，GitHub API 返回 404，表示没有显式 PR 订阅；repo 级通知订阅查询需要额外 `notifications` scope，未强行刷新 GitHub auth。
+
+## Session 11
+
+- 按用户请求升级 Intern Agent Helper 插件：在 `/work-agents/axis_intern_agents` 切到 `master` 并 `git pull --rebase origin master`，确认已是最新。
+- 选择 `releases/` 中版本最高的 `/work-agents/axis_intern_agents/releases/intern-agent-helper-1.6.0.vsix` 并安装。
+- 处理当前 shell 中过期的 `VSCODE_IPC_HOOK_CLI`，改用可响应的 VS Code Insiders IPC socket 完成安装，确认 `llm-intern-agents.intern-agent-helper@1.6.0`。
+- 删除 `/work-agents/.github/hooks/.version`，让 hooks 在 Reload Window 后重新解压覆盖。

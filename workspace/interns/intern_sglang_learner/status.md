@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 10 |
-| Recent Progress | 排查 PR Test Extra 失败邮件来源并确认当前无活跃 CI 运行 |
+| Session | 11 |
+| Recent Progress | 升级 Intern Agent Helper 插件到 1.6.0 并清理 hooks 版本标记 |
