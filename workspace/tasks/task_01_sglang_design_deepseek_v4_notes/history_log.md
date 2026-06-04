@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=14 -->
+<!-- METADATA:SESSION=15 -->
 
 ## Session 0
 
@@ -90,3 +90,9 @@
 - 回答用户关于 ModelOpt 是离线量化还是在线量化的问题：SGLang 支持两种模式。
 - 离线路径是预先用 ModelOpt 生成/导出量化 checkpoint 或 HuggingFace 格式模型，然后 SGLang 直接加载；启动快，适合生产。
 - 在线路径是通过 `--modelopt-quant`、`--quantize-and-serve` 等参数在启动时量化并直接 serving；方便实验，但启动慢且初始化显存压力更大。
+
+## Session 15
+
+- 回答用户关于 Intern Agent Helper 版本和飞书回复 UI 未变化的问题。
+- 确认 VS Code Insiders 扩展目录中已安装 `llm-intern-agents.intern-agent-helper-1.6.0`。
+- 同时发现当前运行中的 `feishu_daemon.py` 仍来自 `llm-intern-agents.intern-agent-helper-1.5.3` 路径，因此飞书回复 UI 仍表现为旧版本；需要 `Reload Window` 或重启 VS Code 远程扩展主机后生效。

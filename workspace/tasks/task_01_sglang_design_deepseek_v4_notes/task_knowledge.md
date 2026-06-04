@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=14 -->
+<!-- METADATA:SESSION=15 -->
 
 ## 编写规则
 
@@ -37,3 +37,4 @@
 - gRPC server 通常用 protobuf 定义服务接口，运行在 HTTP/2 之上，适合强类型、高性能、服务间调用；HTTP server 通常暴露 REST/JSON 或浏览器友好的接口，适合人工调试和通用客户端访问。
 - ModelOpt 是 NVIDIA Model Optimizer；SGLang deepseek_v4 代码中主要通过 `modelopt_fp8`、`modelopt_fp4`、`--modelopt-quant` 等配置把它用于模型量化和量化 checkpoint 的加载/保存/导出。
 - SGLang 的 ModelOpt 集成同时支持离线量化和在线量化：离线量化先生成/导出量化 checkpoint 或 HF 格式模型再加载，适合生产；在线量化用 `--quantize-and-serve` 在启动时量化并 serving，适合开发验证。
+- Intern Agent Helper 安装新版本后，飞书 UI 是否变化取决于正在运行的扩展/daemon 是否已重启；如果 `feishu_daemon.py` 仍来自旧扩展目录，需要 `Reload Window` 让新版本接管。

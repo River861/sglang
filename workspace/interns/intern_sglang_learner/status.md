@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 14 |
-| Recent Progress | 解释 SGLang ModelOpt 支持离线量化和在线量化两种模式 |
+| Session | 15 |
+| Recent Progress | 确认 Intern Agent Helper 已安装 1.6.0 但飞书 daemon 仍运行 1.5.3 |
