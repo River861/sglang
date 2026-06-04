@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=12 -->
+<!-- METADATA:SESSION=13 -->
 
 ## Session 0
 
@@ -79,3 +79,8 @@
 ## Session 12
 
 - 回答用户关于 gRPC server 与 HTTP server 区别的问题：gRPC 是基于 HTTP/2 和 protobuf 的 RPC 服务形态，HTTP server 通常指 REST/JSON 风格的通用 Web API 服务。
+
+## Session 13
+
+- 回答用户关于 ModelOpt 的问题：ModelOpt 指 NVIDIA Model Optimizer，是 NVIDIA 的模型优化库。
+- 结合 SGLang deepseek_v4 代码说明：SGLang 主要把 ModelOpt 用在量化集成上，包括 `modelopt_fp8`、`modelopt_fp4`、`--modelopt-quant`、ModelOpt checkpoint restore/save/export 等路径。
