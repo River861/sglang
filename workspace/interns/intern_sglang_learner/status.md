@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 30 |
-| Recent Progress | 解释 EP 中 redundant expert 的 logical/physical expert 映射与负载均衡作用 |
+| Session | 31 |
+| Recent Progress | 解释 `--expert-distribution-recorder-mode` 的记录模式、数据粒度和 EPLB 用途 |

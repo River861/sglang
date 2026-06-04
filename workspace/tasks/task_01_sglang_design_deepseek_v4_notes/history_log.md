@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=30 -->
+<!-- METADATA:SESSION=31 -->
 
 ## Session 0
 
@@ -206,3 +206,13 @@
 - EPLB 根据 `tokens_per_expert` 等负载统计选择热点 logical expert 复制，并构建 `physical_to_logical_map` / `logical_to_all_physical_map`。
 - dispatch 阶段将 router 输出的 logical expert id remap 到 physical expert id；dynamic/fake 路径会在该 logical expert 的多个 physical copies 中选择一个。
 - 目的在于分摊热门 expert 的 token 流量、降低 GPU 闲置和负载不均；代价是额外显存和映射/调度复杂度。
+
+## Session 31
+
+- 回答用户关于 `--expert-distribution-recorder-mode` 的问题。
+- 该参数启用 `ExpertDistributionRecorder`，用于记录 MoE/EP 中每次 forward pass 各层各 expert 的 token 分布，服务 EPLB 重排、balancedness metrics 和调试。
+- 可选模式为 `stat`、`stat_approx`、`per_pass`、`per_token`；默认 `None`，启用 `--enable-eplb` 或 `--enable-expert-distribution-metrics` 且未显式设置时会自动设为 `stat`。
+- `stat` 只保留 buffered forward pass 的聚合计数，dump 时得到 logical expert 计数，开销较低，适合 EPLB 在线使用。
+- `stat_approx` 在 DeepEP normal 路径直接用 dispatch 返回的 local physical expert count 做近似统计，小 batch 时代码提示优先考虑 `stat`。
+- `per_pass` 使用 detail accumulator 保存每个 forward pass 的聚合分布记录；`per_token` 还保存 input/position/forward_mode 和每层 token 的 top-k expert ids，细节最多、开销最大。
+- 记录控制入口包括 `/start_expert_distribution_record`、`/stop_expert_distribution_record`、`/dump_expert_distribution_record`，dump 目录由 `SGLANG_EXPERT_DISTRIBUTION_RECORDER_DIR` 控制，默认 `/tmp`。
