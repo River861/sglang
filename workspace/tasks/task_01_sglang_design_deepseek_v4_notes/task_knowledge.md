@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=32 -->
+<!-- METADATA:SESSION=33 -->
 
 ## 编写规则
 
@@ -54,3 +54,4 @@
 - EP redundant expert 是 logical expert 的额外 physical replica：SGLang 用 `num_logical_experts + ep_num_redundant_experts` 建物理专家数，EPLB 复制热点专家并在 dispatch 阶段把 logical top-k expert id 映射到某个 physical copy，用于负载均衡而不是改变模型能力。
 - `--expert-distribution-recorder-mode` 启用 MoE expert 分布记录器；`stat`/`stat_approx` 输出聚合统计用于 EPLB 和 balancedness，`per_pass` 逐 forward pass 保存聚合分布，`per_token` 额外保存 token 级 top-k expert ids；启动 EPLB 或 expert distribution metrics 时默认补为 `stat`。
 - `--hicache-write-policy` 控制 HiCache 从快层到慢层的 KV 写入时机：`write_through` 命中即备份，`write_through_selective` 基于 hit count 只备份热点节点，`write_back` 仅在 eviction 时写回；默认是 `write_through`。
+- `--hicache-io-backend` 控制 HiCache CPU/GPU KV 传输实现：`kernel` 是默认 GPU-assisted kernel 路径，`direct` 是普通 CUDA/direct copy 路径并常配 `page_first_direct`，`kernel_ascend` 是 Ascend/NPU 专用路径；部分 attention/storage/layout 组合会触发自动切换。

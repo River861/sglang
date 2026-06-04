@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 32 |
-| Recent Progress | 解释 `--hicache-write-policy` 的 HiCache 分层写入策略和三种模式取舍 |
+| Session | 33 |
+| Recent Progress | 解释 `--hicache-io-backend` 的 CPU/GPU KV 传输后端和兼容性切换 |

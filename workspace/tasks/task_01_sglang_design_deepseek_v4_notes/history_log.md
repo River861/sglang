@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=32 -->
+<!-- METADATA:SESSION=33 -->
 
 ## Session 0
 
@@ -225,3 +225,12 @@
 - `write_through_selective` 通过 hit count 只备份热点节点，当前代码阈值为 2，用于减少低复用 KV 的写入开销。
 - `write_back` 不在命中时写下层，只在上层节点被 eviction 时先 `write_backup(..., write_back=True)` 再 demote/evict，IO 最省但下层缓存可复用性更弱。
 - 当前源码中 HiCache 配置接口也允许运行时更新 `hicache_write_policy`，合法值同样限制为上述三种。
+
+## Session 33
+
+- 回答用户关于 `--hicache-io-backend` 的问题。
+- 该参数控制 HiCache 在 CPU host KV cache 与 GPU device KV cache 之间搬运 KV block 时使用的 IO 实现，默认 `kernel`，可选 `direct`、`kernel`、`kernel_ascend`。
+- `kernel` 使用 GPU-assisted transfer kernel/JIT kernel 路径，host/device index 保持在 GPU 侧，文档推荐为更高性能后端，尤其适合小 page 或复杂布局。
+- `direct` 使用普通 CUDA memory copy/direct indexing 路径，部分布局下会把 device indices 转到 CPU；若 `hicache_mem_layout=page_first` 会自动切到 `page_first_direct`。
+- `kernel_ascend` 是 Ascend/NPU 专用路径；NPU 初始化 hierarchical cache 时会自动设置 `hicache_io_backend=kernel_ascend`，并配套 `page_first_direct` 或 `page_first_kv_split` 布局。
+- 兼容性处理：Mooncake storage backend 不支持 `layer_first`，会按 IO 后端把布局切到 `page_first` 或 `page_first_direct`；显式 FA3 decode backend 与 HiCache kernel IO 不兼容时会切到 `direct`。
