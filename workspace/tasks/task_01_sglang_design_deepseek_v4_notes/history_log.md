@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=27 -->
+<!-- METADATA:SESSION=28 -->
 
 ## Session 0
 
@@ -182,3 +182,10 @@
 - deepseek_v4 分支代码中的 `MXFP4QuantizeUtil` 使用 E2M1 FP4 值域，默认 block size 为 32，并将两个 FP4 值打包到一个 `uint8`。
 - scale 采用 E8M0 形式；反量化时近似为 `E2M1_value * 2 ** (scale - 127)`。
 - SGLang 中 `mxfp4` 主要用于量化权重/激活，尤其是 MoE expert 权重、GPT-OSS/DeepSeek/FlashInfer MXFP4 kernel 路径，以降低显存和带宽成本。
+
+## Session 28
+
+- 用户表示不理解 MXFP4 中 “microscaling / 一小块数值共享 scale”。
+- 用更直观的方式补充解释：FP4 只能存很少几个小数值，scale 相当于这一小组数字共同使用的单位。
+- 量化时先为每 32 个数找一个合适 scale，把原始数除以 scale 压进 FP4 可表示范围；反量化时再把 FP4 值乘回同一个 scale。
+- 共享 scale 的意义是在保持 4-bit 存储成本较低的同时，让不同大小范围的小块分别选择不同单位，缓解普通 FP4 动态范围太窄的问题。

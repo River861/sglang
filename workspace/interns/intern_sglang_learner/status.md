@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 27 |
-| Recent Progress | 解释 MXFP4 / microscaling FP4 量化格式 |
+| Session | 28 |
+| Recent Progress | 用数字例子补充解释 MXFP4 的 microscaling / shared scale |
