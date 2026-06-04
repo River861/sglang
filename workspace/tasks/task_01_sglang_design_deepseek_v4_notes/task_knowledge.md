@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=17 -->
+<!-- METADATA:SESSION=18 -->
 
 ## 编写规则
 
@@ -39,3 +39,4 @@
 - SGLang 的 ModelOpt 集成同时支持离线量化和在线量化：离线量化先生成/导出量化 checkpoint 或 HF 格式模型再加载，适合生产；在线量化用 `--quantize-and-serve` 在启动时量化并 serving，适合开发验证。
 - Intern Agent Helper 安装新版本后，飞书 UI 是否变化取决于正在运行的扩展/daemon 是否已重启；如果 `feishu_daemon.py` 仍来自旧扩展目录，需要 `Reload Window` 让新版本接管。
 - 2026-06-04 检查发现：Intern Agent Helper 1.6.0 已被 VS Code 识别为安装版本，但 1.6.0 `feishu_daemon.py` 会因 relay credentials HTTP 404 退出；为保持飞书通道可用，当前 daemon 回退运行 1.5.3。
+- `--enable-prefill-delayer` 启用 `managers/prefill_delayer.py::PrefillDelayer`，在 DP attention 下跨 DP rank 协商是否允许 prefill；mixed prefillable 状态会延迟 prefill，等待 rank 对齐，以减少 prefill idle，最多延迟 `--prefill-delayer-max-delay-passes`。

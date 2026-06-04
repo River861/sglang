@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=17 -->
+<!-- METADATA:SESSION=18 -->
 
 ## Session 0
 
@@ -107,3 +107,10 @@
 ## Session 17
 
 - 响应用户在线确认，继续保持简洁答复模式。
+
+## Session 18
+
+- 回答用户关于 `--enable-prefill-delayer` 的问题。
+- 该参数启用 `PrefillDelayer`，用于 DP attention 场景下减少 prefill 阶段的空转/等待。
+- 核心逻辑：各 DP rank 通过 CPU group 汇总本地是否有 prefillable 请求；如果所有 rank 都能 prefill 则放行，如果只有部分 rank 能 prefill 则最多延迟若干 forward pass，等待更多 rank 对齐后再 prefill。
+- 约束条件：需要 `enable_dp_attention=True`，`disaggregation_mode="null"`，且不能禁用 overlap schedule。

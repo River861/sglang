@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 17 |
-| Recent Progress | 响应用户在线确认 |
+| Session | 18 |
+| Recent Progress | 解释 --enable-prefill-delayer 的作用和调度逻辑 |
