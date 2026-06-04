@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 24 |
-| Recent Progress | 解释 --grammar-backend 的可选后端、默认值与 structured output 调用链 |
+| Session | 25 |
+| Recent Progress | 解释普通 speculative decoding 与 NGRAM speculative decoding 的区别 |

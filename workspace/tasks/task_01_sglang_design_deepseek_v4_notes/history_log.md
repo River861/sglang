@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=24 -->
+<!-- METADATA:SESSION=25 -->
 
 ## Session 0
 
@@ -158,3 +158,11 @@
 - `ServerArgs._handle_grammar_backend()` 在未显式设置时把默认 backend 设为 `xgrammar`。
 - `GrammarManager` 在请求带 `json_schema`、`regex`、`ebnf` 或 `structural_tag` 时使用该 backend 编译 grammar；若设置为 `none`，这些 grammar-based generation 请求会被 abort。
 - 采样阶段通过 grammar object 生成 vocab mask，并在输出 token 后调用 `accept_token` 推进 grammar 状态。
+
+## Session 25
+
+- 回答用户关于 Speculative decoding 与 Speculative decoding (ngram) 区别的问题。
+- SGLang 的 `SpeculativeAlgorithm` 包含 `EAGLE`、`EAGLE3`、`STANDALONE`、`NGRAM`、`NONE`；`NGRAM` 是 speculative decoding 的一种特殊算法。
+- 普通 speculative decoding 通常由 draft model 或模型内 MTP/EAGLE draft 路径先猜多个 token，再由 target model 一次 forward 验证。
+- NGRAM speculative decoding 不加载神经网络 draft model，而是通过 `NgramCache` 对当前上下文后缀做 ngram 匹配，取历史 continuation 作为候选 token tree，再由 target model 验证。
+- deepseek_v4 分支中 NGRAM 仅支持 CUDA，且会禁用 overlap scheduler 与 mixed chunked prefill；其参数主要是 `--speculative-ngram-*`。

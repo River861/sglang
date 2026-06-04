@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=24 -->
+<!-- METADATA:SESSION=25 -->
 
 ## 编写规则
 
@@ -46,3 +46,4 @@
 - `--pp-max-micro-batch-size` 是 pipeline parallelism 下单个 PP micro-batch 的请求数上限；未设置时默认为 `max(max_running_requests // pp_size, 1)`，调度中用于限制 `pp_max_micro_batch_size - running_bs` 个可新增请求。
 - `--constrained-json-whitespace-pattern` 控制 constrained JSON 输出中语法空白的 regex，适用于 outlines/llguidance；`--constrained-json-disable-any-whitespace` 强制紧凑 JSON 表示，适用于 xgrammar/llguidance，并通过 `any_whitespace=False` 生效。
 - `--grammar-backend` 选择 structured output 的 grammar-guided decoding backend；可选 `xgrammar`、`outlines`、`llguidance`、`none`，未显式设置时 `_handle_grammar_backend()` 会设为 `xgrammar`。
+- `SpeculativeAlgorithm.NGRAM` 是 speculative decoding 的 ngram 变体：普通 EAGLE/STANDALONE 路径依赖 draft model/MTP 猜 token，NGRAM 路径依赖 `NgramCache` 从历史 token 模式匹配 continuation，再用 target model 验证候选。
