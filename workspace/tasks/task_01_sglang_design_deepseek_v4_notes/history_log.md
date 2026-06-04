@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=23 -->
+<!-- METADATA:SESSION=24 -->
 
 ## Session 0
 
@@ -150,3 +150,11 @@
 - `--constrained-json-whitespace-pattern` 用于 constrained JSON 输出中 JSON 语法空白的 regex 控制，只传给 outlines 与 llguidance backend。
 - `--constrained-json-disable-any-whitespace` 用于强制紧凑 JSON 表示，只传给 xgrammar 与 llguidance backend，代码里通过 `any_whitespace=not constrained_json_disable_any_whitespace` 生效。
 - 这两个参数影响 JSON 结构 token 之间的空白生成，不改变 JSON schema 本身，也不影响字符串值内部内容。
+
+## Session 24
+
+- 回答用户关于 `--grammar-backend` 的问题。
+- `--grammar-backend` 用于选择 grammar-guided constrained decoding backend，可选 `xgrammar`、`outlines`、`llguidance`、`none`。
+- `ServerArgs._handle_grammar_backend()` 在未显式设置时把默认 backend 设为 `xgrammar`。
+- `GrammarManager` 在请求带 `json_schema`、`regex`、`ebnf` 或 `structural_tag` 时使用该 backend 编译 grammar；若设置为 `none`，这些 grammar-based generation 请求会被 abort。
+- 采样阶段通过 grammar object 生成 vocab mask，并在输出 token 后调用 `accept_token` 推进 grammar 状态。
