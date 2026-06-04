@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=8 -->
+<!-- METADATA:SESSION=9 -->
 
 ## Session 0
 
@@ -56,3 +56,7 @@
 - 确认 `/root/.codex/config.toml` 使用 `model_provider = "lb"`，该 provider 的 `env_key` 要求插件进程环境中存在 `LB_API_KEY`。
 - 发现 `LB_API_KEY` 已写在 shell 启动文件中，但 `.bashrc` 对非交互 shell 会提前返回，VS Code 远程扩展进程未继承该变量。
 - 已创建 `/root/.vscode-server-insiders/server-env-setup` 和 `/root/.vscode-server/server-env-setup`，从现有 shell 配置导入 `LB_API_KEY`，不复制密钥明文；需要重启远程 VS Code Server 或重新连接窗口后生效。
+
+## Session 9
+
+- 回答用户关于 `sglang.srt` 中 `srt` 缩写的问题：未在本地源码/文档中发现明确展开；结合模块职责判断更可能指 `SGLang Runtime`。

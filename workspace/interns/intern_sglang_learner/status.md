@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 8 |
-| Recent Progress | 诊断并修复 VS Code Codex 插件缺少 LB_API_KEY 环境变量的问题 |
+| Session | 9 |
+| Recent Progress | 回答 sglang.srt 中 srt 缩写含义的判断 |
