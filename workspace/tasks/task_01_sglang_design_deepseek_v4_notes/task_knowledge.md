@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=21 -->
+<!-- METADATA:SESSION=22 -->
 
 ## 编写规则
 
@@ -43,3 +43,4 @@
 - SGLang 中 forward pass 可理解为一次 scheduler batch 的模型前向执行；token usage 是 token/KV cache 池占用率，普通路径由 `_get_token_info()` 计算为 `num_used / max_total_num_tokens`。
 - `--prefill-delayer-forward-passes-buckets` 和 `--prefill-delayer-wait-seconds-buckets` 只配置 PrefillDelayer metrics histogram 分桶；前者统计等待的 forward pass 数，后者统计等待秒数，不改变调度决策。
 - PrefillDelayer buckets 数组中的每个元素是 histogram 的桶上界：例如 forward passes buckets 的 `4` 表示统计“等待 forward pass 数 <= 4”的累计桶，wait seconds buckets 的 `0.1` 表示统计“等待秒数 <= 0.1”的累计桶。
+- `--pp-max-micro-batch-size` 是 pipeline parallelism 下单个 PP micro-batch 的请求数上限；未设置时默认为 `max(max_running_requests // pp_size, 1)`，调度中用于限制 `pp_max_micro_batch_size - running_bs` 个可新增请求。

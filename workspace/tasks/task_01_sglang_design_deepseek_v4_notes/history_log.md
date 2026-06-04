@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=21 -->
+<!-- METADATA:SESSION=22 -->
 
 ## Session 0
 
@@ -135,3 +135,11 @@
 - `--prefill-delayer-forward-passes-buckets 1 2 4 8` 表示统计等待 forward pass 数落在 `<=1`、`<=2`、`<=4`、`<=8` 等累计桶中。
 - `--prefill-delayer-wait-seconds-buckets 0.01 0.05 0.1 0.5` 表示统计等待秒数落在 `<=0.01s`、`<=0.05s`、`<=0.1s`、`<=0.5s` 等累计桶中。
 - 这些数组元素只改变监控统计粒度，不改变 PrefillDelayer 实际等待多久。
+
+## Session 22
+
+- 回答用户关于 `--pp-max-micro-batch-size` 的问题。
+- 该参数只在 pipeline parallelism 场景下有意义，用于限制单个 PP micro-batch 最多包含多少个请求。
+- 若未设置，scheduler 会设置为 `max(max_running_requests // pp_size, 1)`。
+- 调度时 `get_num_allocatable_reqs(running_bs)` 使用 `pp_max_micro_batch_size - running_bs` 限制本轮 micro-batch 还能加入多少请求，并受 `req_to_token_pool.available_size()` 进一步限制。
+- 该值可通过 `/set_internal_state` 动态调整，合法范围为 `[1, max_running_requests // pp_size]`。
