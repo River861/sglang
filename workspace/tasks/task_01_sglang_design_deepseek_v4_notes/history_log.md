@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=15 -->
+<!-- METADATA:SESSION=16 -->
 
 ## Session 0
 
@@ -96,3 +96,10 @@
 - 回答用户关于 Intern Agent Helper 版本和飞书回复 UI 未变化的问题。
 - 确认 VS Code Insiders 扩展目录中已安装 `llm-intern-agents.intern-agent-helper-1.6.0`。
 - 同时发现当前运行中的 `feishu_daemon.py` 仍来自 `llm-intern-agents.intern-agent-helper-1.5.3` 路径，因此飞书回复 UI 仍表现为旧版本；需要 `Reload Window` 或重启 VS Code 远程扩展主机后生效。
+
+## Session 16
+
+- 用户 Reload Window 后再次询问当前是否使用 1.6.0。
+- 确认 VS Code Insiders 当前扩展列表显示 `llm-intern-agents.intern-agent-helper@1.6.0`。
+- 发现实际运行的 `feishu_daemon.py` 仍来自 1.5.3；尝试停止旧 daemon 并手动启动 1.6.0 daemon，但 1.6.0 daemon 因 relay credentials 接口返回 HTTP 404 而退出。
+- 为避免飞书通道中断，已恢复启动 1.5.3 daemon；因此当前“安装版本”为 1.6.0，但“飞书 daemon 实际运行版本”为 1.5.3。
