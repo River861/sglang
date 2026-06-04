@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=18 -->
+<!-- METADATA:SESSION=19 -->
 
 ## Session 0
 
@@ -114,3 +114,10 @@
 - 该参数启用 `PrefillDelayer`，用于 DP attention 场景下减少 prefill 阶段的空转/等待。
 - 核心逻辑：各 DP rank 通过 CPU group 汇总本地是否有 prefillable 请求；如果所有 rank 都能 prefill 则放行，如果只有部分 rank 能 prefill 则最多延迟若干 forward pass，等待更多 rank 对齐后再 prefill。
 - 约束条件：需要 `enable_dp_attention=True`，`disaggregation_mode="null"`，且不能禁用 overlap schedule。
+
+## Session 19
+
+- 回答用户关于 forward pass 和 token 使用率含义的问题。
+- forward pass 指模型执行一次前向计算；在 SGLang scheduler 中可理解为一次调度出来的 batch 被送进模型跑一轮，prefill 可能处理一段 prompt token，decode 通常为每个活跃请求生成下一个 token。
+- token usage 指 token/KV cache 池占用比例，普通路径中计算为 `num_used / max_total_num_tokens`，其中 `num_used = max_total_num_tokens - (available_size + evictable_size)`。
+- 在 prefill delayer 中，`max_delay_passes` 是最多延迟多少个模型前向轮次；`token_usage_low_watermark` 是当 KV/token 池占用率很低时允许不再延迟 prefill。
