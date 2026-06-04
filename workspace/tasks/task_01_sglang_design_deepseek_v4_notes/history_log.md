@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=16 -->
+<!-- METADATA:SESSION=17 -->
 
 ## Session 0
 
@@ -103,3 +103,7 @@
 - 确认 VS Code Insiders 当前扩展列表显示 `llm-intern-agents.intern-agent-helper@1.6.0`。
 - 发现实际运行的 `feishu_daemon.py` 仍来自 1.5.3；尝试停止旧 daemon 并手动启动 1.6.0 daemon，但 1.6.0 daemon 因 relay credentials 接口返回 HTTP 404 而退出。
 - 为避免飞书通道中断，已恢复启动 1.5.3 daemon；因此当前“安装版本”为 1.6.0，但“飞书 daemon 实际运行版本”为 1.5.3。
+
+## Session 17
+
+- 响应用户在线确认，继续保持简洁答复模式。
