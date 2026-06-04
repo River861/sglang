@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=35 -->
+<!-- METADATA:SESSION=36 -->
 
 ## 编写规则
 
@@ -57,3 +57,4 @@
 - `--hicache-io-backend` 控制 HiCache CPU/GPU KV 传输实现：`kernel` 是默认 GPU-assisted kernel 路径，`direct` 是普通 CUDA/direct copy 路径并常配 `page_first_direct`，`kernel_ascend` 是 Ascend/NPU 专用路径；部分 attention/storage/layout 组合会触发自动切换。
 - `--hicache-storage-prefetch-policy` 控制 HiCache L3 storage 预取 KV 时的停止条件：`best_effort` 立即放行、`wait_complete` 等全部预取完成、`timeout` 在完成或达到线性超时后放行；该参数只在启用 storage backend 时生效。
 - deepseek_v4 分支的 Double Sparsity 是 decode attention 优化：用离线 heavy channel 配置先在低维 channel 上近似计算注意力并选 heavy tokens，再只对这些 token 的完整 K/V 做 sparse attention；短序列低于 `ds_sparse_decode_threshold` 会回退 dense decode。
+- Double Sparsity 的两层稀疏是级联叠加：channel sparsity 只用于全上下文近似打分和 token 筛选，最终 sparse attention 对入选 heavy tokens 使用完整 Q/K/V 维度。

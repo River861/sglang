@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=35 -->
+<!-- METADATA:SESSION=36 -->
 
 ## Session 0
 
@@ -254,3 +254,12 @@
 - KV pool 使用 `DoubleSparseTokenToKVPool`，除完整 K/V 外额外保存 `label_buffer`，即每个 token 在 heavy channels 上的 key label。
 - decode 时短序列或 `max_seq_len < --ds-sparse-decode-threshold` 会回退 dense decode；长序列路径先用 `q_label @ k_label` 近似打分，`torch.topk(..., ds_heavy_token_num)` 选 token，再只对这些 token 的完整 K/V 做 sparse attention。
 - 相关参数包括 `--ds-channel-config-path`、`--ds-heavy-channel-num`、`--ds-heavy-token-num`、`--ds-heavy-channel-type`、`--ds-sparse-decode-threshold`。
+
+## Session 36
+
+- 回答用户关于 Double Sparsity 两层稀疏是否叠加的问题。
+- 结论：会叠加，但方式是级联而不是最终 attention 同时只看 heavy channels 和 heavy tokens。
+- 第一阶段 channel sparsity 用低维 `q_label @ k_label` 在全上下文上做近似打分；第二阶段 token sparsity 根据近似分数选 `ds_heavy_token_num` 个 token。
+- 最终 sparse attention 对入选 heavy tokens 使用完整维度 Q/K/V 计算，不再只使用 heavy channels。
+- 因此计算节省来自“全上下文低维筛选 + 小 token 集合完整注意力”，而不是“最终注意力同时低维且少 token”。
+- 如果序列低于 `ds_sparse_decode_threshold` 或长度小于 heavy token 数，deepseek_v4 分支会回退 dense decode，两层稀疏都不生效。
