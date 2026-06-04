@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=20 -->
+<!-- METADATA:SESSION=21 -->
 
 ## 编写规则
 
@@ -42,3 +42,4 @@
 - `--enable-prefill-delayer` 启用 `managers/prefill_delayer.py::PrefillDelayer`，在 DP attention 下跨 DP rank 协商是否允许 prefill；mixed prefillable 状态会延迟 prefill，等待 rank 对齐，以减少 prefill idle，最多延迟 `--prefill-delayer-max-delay-passes`。
 - SGLang 中 forward pass 可理解为一次 scheduler batch 的模型前向执行；token usage 是 token/KV cache 池占用率，普通路径由 `_get_token_info()` 计算为 `num_used / max_total_num_tokens`。
 - `--prefill-delayer-forward-passes-buckets` 和 `--prefill-delayer-wait-seconds-buckets` 只配置 PrefillDelayer metrics histogram 分桶；前者统计等待的 forward pass 数，后者统计等待秒数，不改变调度决策。
+- PrefillDelayer buckets 数组中的每个元素是 histogram 的桶上界：例如 forward passes buckets 的 `4` 表示统计“等待 forward pass 数 <= 4”的累计桶，wait seconds buckets 的 `0.1` 表示统计“等待秒数 <= 0.1”的累计桶。

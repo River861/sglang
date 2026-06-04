@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=20 -->
+<!-- METADATA:SESSION=21 -->
 
 ## Session 0
 
@@ -128,3 +128,10 @@
 - 两个参数只配置 Prometheus histogram 分桶，用于观测 PrefillDelayer 等了多少 forward pass、等了多少秒，不直接改变 prefill delayer 的放行/延迟决策。
 - forward passes 默认 buckets 为 `[5, 20, 50, 100, 200]`，会过滤掉 `>= max_delay_passes` 的值，并自动加入 `0` 和 `max_delay_passes - 1`。
 - wait seconds 默认 buckets 为 `[1, 2, 5, 10, 20, 50, 100, 200, 500]`，并自动加入 `0`。
+
+## Session 21
+
+- 进一步解释 buckets 数组含义：数组是 histogram 的多个阈值边界，每个元素表示一个“<= 这个值”的统计桶上界。
+- `--prefill-delayer-forward-passes-buckets 1 2 4 8` 表示统计等待 forward pass 数落在 `<=1`、`<=2`、`<=4`、`<=8` 等累计桶中。
+- `--prefill-delayer-wait-seconds-buckets 0.01 0.05 0.1 0.5` 表示统计等待秒数落在 `<=0.01s`、`<=0.05s`、`<=0.1s`、`<=0.5s` 等累计桶中。
+- 这些数组元素只改变监控统计粒度，不改变 PrefillDelayer 实际等待多久。

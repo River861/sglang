@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 20 |
-| Recent Progress | 解释 prefill delayer metrics histogram buckets 参数 |
+| Session | 21 |
+| Recent Progress | 解释 prefill delayer buckets 数组中每个元素表示 histogram 阈值边界 |
