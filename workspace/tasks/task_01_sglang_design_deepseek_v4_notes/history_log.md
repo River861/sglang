@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=22 -->
+<!-- METADATA:SESSION=23 -->
 
 ## Session 0
 
@@ -143,3 +143,10 @@
 - 若未设置，scheduler 会设置为 `max(max_running_requests // pp_size, 1)`。
 - 调度时 `get_num_allocatable_reqs(running_bs)` 使用 `pp_max_micro_batch_size - running_bs` 限制本轮 micro-batch 还能加入多少请求，并受 `req_to_token_pool.available_size()` 进一步限制。
 - 该值可通过 `/set_internal_state` 动态调整，合法范围为 `[1, max_running_requests // pp_size]`。
+
+## Session 23
+
+- 回答用户关于 `--constrained-json-whitespace-pattern` 和 `--constrained-json-disable-any-whitespace` 的问题。
+- `--constrained-json-whitespace-pattern` 用于 constrained JSON 输出中 JSON 语法空白的 regex 控制，只传给 outlines 与 llguidance backend。
+- `--constrained-json-disable-any-whitespace` 用于强制紧凑 JSON 表示，只传给 xgrammar 与 llguidance backend，代码里通过 `any_whitespace=not constrained_json_disable_any_whitespace` 生效。
+- 这两个参数影响 JSON 结构 token 之间的空白生成，不改变 JSON schema 本身，也不影响字符串值内部内容。

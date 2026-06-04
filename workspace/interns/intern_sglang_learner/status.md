@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 22 |
-| Recent Progress | 解释 --pp-max-micro-batch-size 在 pipeline parallelism 中的作用 |
+| Session | 23 |
+| Recent Progress | 解释 constrained JSON 输出中的 whitespace pattern 与 compact whitespace 开关 |
