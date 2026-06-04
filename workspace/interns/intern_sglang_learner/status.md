@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 36 |
-| Recent Progress | 解释 Double Sparsity 中 channel sparsity 与 token sparsity 的级联叠加关系 |
+| Session | 37 |
+| Recent Progress | 解释 `--enable-nccl-nvls` 对 NCCL NVLS 环境变量和 GPU collectives 的作用 |

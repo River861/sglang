@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=36 -->
+<!-- METADATA:SESSION=37 -->
 
 ## Session 0
 
@@ -263,3 +263,12 @@
 - 最终 sparse attention 对入选 heavy tokens 使用完整维度 Q/K/V 计算，不再只使用 heavy channels。
 - 因此计算节省来自“全上下文低维筛选 + 小 token 集合完整注意力”，而不是“最终注意力同时低维且少 token”。
 - 如果序列低于 `ds_sparse_decode_threshold` 或长度小于 heavy token 数，deepseek_v4 分支会回退 dense decode，两层稀疏都不生效。
+
+## Session 37
+
+- 回答用户关于 `--enable-nccl-nvls` 的问题。
+- 该参数定义在优化/调试选项中，默认 `False`，文档说明为在可用时为 prefill-heavy 请求启用 NCCL NVLS。
+- SGLang 的实际实现位于 `entrypoints/engine.py::_set_envs_and_config()`：若设置该参数，会把环境变量 `NCCL_NVLS_ENABLE=1`。
+- `--enable-symm-mem` 也会使 `NCCL_NVLS_ENABLE=1`，并额外设置 `NCCL_CUMEM_ENABLE=1`。
+- NVLS 可理解为 NCCL 使用 NVLink/NVSwitch 相关优化路径来加速 GPU 间 collective 通信，主要影响 tensor parallel 等场景中的 all-reduce/all-gather 等通信，不改变模型输出。
+- 该优化依赖硬件、驱动、NCCL 版本和拓扑支持；不支持时通常不会带来收益，排障时也可通过显式环境变量覆盖。
