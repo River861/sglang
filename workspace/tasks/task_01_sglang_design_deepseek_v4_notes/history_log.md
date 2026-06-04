@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=11 -->
+<!-- METADATA:SESSION=12 -->
 
 ## Session 0
 
@@ -75,3 +75,7 @@
 - 选择 `releases/` 中版本最高的 `/work-agents/axis_intern_agents/releases/intern-agent-helper-1.6.0.vsix` 并安装。
 - 处理当前 shell 中过期的 `VSCODE_IPC_HOOK_CLI`，改用可响应的 VS Code Insiders IPC socket 完成安装，确认 `llm-intern-agents.intern-agent-helper@1.6.0`。
 - 删除 `/work-agents/.github/hooks/.version`，让 hooks 在 Reload Window 后重新解压覆盖。
+
+## Session 12
+
+- 回答用户关于 gRPC server 与 HTTP server 区别的问题：gRPC 是基于 HTTP/2 和 protobuf 的 RPC 服务形态，HTTP server 通常指 REST/JSON 风格的通用 Web API 服务。

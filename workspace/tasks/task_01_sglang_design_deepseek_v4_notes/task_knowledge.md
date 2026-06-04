@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=11 -->
+<!-- METADATA:SESSION=12 -->
 
 ## 编写规则
 
@@ -34,3 +34,4 @@
 - 配合上述飞书笔记学习时，源码优先使用 `/work-agents/intern_sglang_learner/sglang_deepseek_v4/`，因为该 worktree 指向笔记基准 `origin/deepseek_v4 @ 1b497c7a0`；`/work-agents/intern_sglang_learner/sglang/` 用于任务记录和 PR 状态维护。
 - 熟悉仓库的第一步建议从 `python/sglang/launch_server.py` 开始，它是 server 启动入口，读它可以建立 CLI 参数、ServerArgs 和 HTTP server 启动链路的整体框架。
 - `sglang.srt` 的 `srt` 未在本地源码/文档中发现明确展开；结合目录职责，它更可能表示 `SGLang Runtime`。
+- gRPC server 通常用 protobuf 定义服务接口，运行在 HTTP/2 之上，适合强类型、高性能、服务间调用；HTTP server 通常暴露 REST/JSON 或浏览器友好的接口，适合人工调试和通用客户端访问。
