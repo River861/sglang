@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=26 -->
+<!-- METADATA:SESSION=27 -->
 
 ## Session 0
 
@@ -174,3 +174,11 @@
 - MTP 是 Multi-Token Prediction，指模型自身带有用于预测未来多个 token 的 draft 能力/权重模块，例如 DeepSeek 的 NextN/MTP 模块。
 - 在 SGLang DeepSeek 路径中，MTP 通过 `--speculative-algorithm EAGLE` 启用；`NEXTN` 会映射成 `EAGLE`，DeepSeek draft model path 未显式设置时会使用同一模型路径，并把 draft architecture 改写为 `DeepseekV3ForCausalLMNextN` 或 `DeepseekV4ForCausalLMNextN`。
 - 因此 MTP 是 draft token 的来源之一，EAGLE 是使用这些 draft token 并验证加速的算法路径。
+
+## Session 27
+
+- 回答用户关于 MXFP4 含义的问题。
+- MXFP4 指 microscaling FP4：每个数值用 FP4 表示，一小块数值共享一个 scale。
+- deepseek_v4 分支代码中的 `MXFP4QuantizeUtil` 使用 E2M1 FP4 值域，默认 block size 为 32，并将两个 FP4 值打包到一个 `uint8`。
+- scale 采用 E8M0 形式；反量化时近似为 `E2M1_value * 2 ** (scale - 127)`。
+- SGLang 中 `mxfp4` 主要用于量化权重/激活，尤其是 MoE expert 权重、GPT-OSS/DeepSeek/FlashInfer MXFP4 kernel 路径，以降低显存和带宽成本。

@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 26 |
-| Recent Progress | 解释 EAGLE speculative decoding 与 MTP 模型能力的区别 |
+| Session | 27 |
+| Recent Progress | 解释 MXFP4 / microscaling FP4 量化格式 |

@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=26 -->
+<!-- METADATA:SESSION=27 -->
 
 ## 编写规则
 
@@ -48,3 +48,4 @@
 - `--grammar-backend` 选择 structured output 的 grammar-guided decoding backend；可选 `xgrammar`、`outlines`、`llguidance`、`none`，未显式设置时 `_handle_grammar_backend()` 会设为 `xgrammar`。
 - `SpeculativeAlgorithm.NGRAM` 是 speculative decoding 的 ngram 变体：普通 EAGLE/STANDALONE 路径依赖 draft model/MTP 猜 token，NGRAM 路径依赖 `NgramCache` 从历史 token 模式匹配 continuation，再用 target model 验证候选。
 - EAGLE 是 speculative decoding 算法/执行框架；MTP 是模型内 Multi-Token Prediction draft 能力。SGLang 中 DeepSeek MTP 通过 `--speculative-algorithm EAGLE` 使用，draft architecture 会切到 `DeepseekV3ForCausalLMNextN`/`DeepseekV4ForCausalLMNextN`。
+- MXFP4 是 microscaling FP4：E2M1 FP4 数值按小 block 共享 E8M0 scale。SGLang 代码默认 block size 32，两个 FP4 packed 到一个 `uint8`，常用于 MoE expert 权重量化和 FlashInfer/DeepSeek/GPT-OSS MXFP4 kernel 路径。
