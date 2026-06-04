@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 3 |
-| Recent Progress | 确认 sglang_deepseek_v4 是指向 origin/deepseek_v4 的 linked worktree |
+| Session | 4 |
+| Recent Progress | 结合飞书笔记给出源码阅读目录与学习顺序建议 |

@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=3 -->
+<!-- METADATA:SESSION=4 -->
 
 ## Session 0
 
@@ -30,3 +30,9 @@
 - 核查 `/work-agents/intern_sglang_learner/sglang_deepseek_v4`：它是主仓库 `/work-agents/intern_sglang_learner/sglang` 的 Git linked worktree，不是独立 clone。
 - 该 worktree 当前处于 detached HEAD，指向 `origin/deepseek_v4 @ 1b497c7a0c5a2951ae86f21f4cfebe4678bbc7e4`，提交信息为 `little fix deepgemm hash on gb image`。
 - `sglang_deepseek_v4` 工作区干净，适合作为 DeepSeek V4 分支代码阅读目录；常规任务状态与 PR 仍维护在 `/work-agents/intern_sglang_learner/sglang/` 当前分支。
+
+## Session 4
+
+- 结合飞书笔记基准说明源码阅读选择：笔记基于 `origin/deepseek_v4 @ 1b497c7a0`，因此学习 DeepSeek V4 专项时优先阅读 `/work-agents/intern_sglang_learner/sglang_deepseek_v4/`。
+- 建议将 `/work-agents/intern_sglang_learner/sglang/` 作为任务记录、PR 状态维护和必要时对照当前任务分支的目录。
+- 给出建议阅读顺序：先读飞书索引和“总览与请求调用链”，再按入口、manager、model runner、DeepSeek V4 专项文件逐层对照源码。

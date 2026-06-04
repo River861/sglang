@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=3 -->
+<!-- METADATA:SESSION=4 -->
 
 ## 编写规则
 
@@ -31,3 +31,4 @@
   - 总览与请求调用链：https://feishu.cn/docx/RMYfdhZVyoKeBCxgZpWck2innWh
   - 核心模块逐文件笔记：https://feishu.cn/docx/Cg5bdBxyWourzrxKXzWctWKAnOg
   - DeepSeek V4 分支专项：https://feishu.cn/docx/GtLMdr4EvoSRaQxzS4zcGmrMnuh
+- 配合上述飞书笔记学习时，源码优先使用 `/work-agents/intern_sglang_learner/sglang_deepseek_v4/`，因为该 worktree 指向笔记基准 `origin/deepseek_v4 @ 1b497c7a0`；`/work-agents/intern_sglang_learner/sglang/` 用于任务记录和 PR 状态维护。
