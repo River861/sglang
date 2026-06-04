@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=2 -->
+<!-- METADATA:SESSION=3 -->
 
 ## Session 0
 
@@ -24,3 +24,9 @@
 ## Session 2
 
 - 回答用户关于 SGLang 源码路径的问题：当前源码根目录为 `/work-agents/intern_sglang_learner/sglang/`。
+
+## Session 3
+
+- 核查 `/work-agents/intern_sglang_learner/sglang_deepseek_v4`：它是主仓库 `/work-agents/intern_sglang_learner/sglang` 的 Git linked worktree，不是独立 clone。
+- 该 worktree 当前处于 detached HEAD，指向 `origin/deepseek_v4 @ 1b497c7a0c5a2951ae86f21f4cfebe4678bbc7e4`，提交信息为 `little fix deepgemm hash on gb image`。
+- `sglang_deepseek_v4` 工作区干净，适合作为 DeepSeek V4 分支代码阅读目录；常规任务状态与 PR 仍维护在 `/work-agents/intern_sglang_learner/sglang/` 当前分支。
