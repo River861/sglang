@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=4 -->
+<!-- METADATA:SESSION=5 -->
 
 ## Session 0
 
@@ -36,3 +36,7 @@
 - 结合飞书笔记基准说明源码阅读选择：笔记基于 `origin/deepseek_v4 @ 1b497c7a0`，因此学习 DeepSeek V4 专项时优先阅读 `/work-agents/intern_sglang_learner/sglang_deepseek_v4/`。
 - 建议将 `/work-agents/intern_sglang_learner/sglang/` 作为任务记录、PR 状态维护和必要时对照当前任务分支的目录。
 - 给出建议阅读顺序：先读飞书索引和“总览与请求调用链”，再按入口、manager、model runner、DeepSeek V4 专项文件逐层对照源码。
+
+## Session 5
+
+- 用户要求答复模式改为简洁版：默认只回复答案，不打印过程日志；项目强制的 Session checklist 仍需保留。

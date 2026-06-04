@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 4 |
-| Recent Progress | 结合飞书笔记给出源码阅读目录与学习顺序建议 |
+| Session | 5 |
+| Recent Progress | 记录用户希望答复默认采用简洁版 |
