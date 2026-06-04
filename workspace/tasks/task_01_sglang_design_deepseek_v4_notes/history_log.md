@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=9 -->
+<!-- METADATA:SESSION=10 -->
 
 ## Session 0
 
@@ -60,3 +60,11 @@
 ## Session 9
 
 - 回答用户关于 `sglang.srt` 中 `srt` 缩写的问题：未在本地源码/文档中发现明确展开；结合模块职责判断更可能指 `SGLang Runtime`。
+
+## Session 10
+
+- 排查用户收到 `[River861/sglang] PR run failed: PR Test Extra` 邮件的问题。
+- 确认 PR #1 当前状态为 CLOSED，当前分支没有 queued/in_progress 的 GitHub Actions run。
+- 失败来源是历史 `PR Test Extra` workflow：该 workflow 会在 PR push 时启动，并在缺少 `run-ci-extra` 标签时由 `call-gate / pr-gate` 失败，从而触发 GitHub 失败邮件。
+- 当前 PR 只有 `documentation` 标签，没有 `run-ci`/`run-ci-extra`；PR 已关闭后该 PR 不会再因为后续分支 push 触发新的 PR workflow。
+- 尝试取消当前用户对 issue/PR #1 的显式订阅，GitHub API 返回 404，表示没有显式 PR 订阅；repo 级通知订阅查询需要额外 `notifications` scope，未强行刷新 GitHub auth。
