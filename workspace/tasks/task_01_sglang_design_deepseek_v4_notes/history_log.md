@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=28 -->
+<!-- METADATA:SESSION=29 -->
 
 ## Session 0
 
@@ -189,3 +189,12 @@
 - 用更直观的方式补充解释：FP4 只能存很少几个小数值，scale 相当于这一小组数字共同使用的单位。
 - 量化时先为每 32 个数找一个合适 scale，把原始数除以 scale 压进 FP4 可表示范围；反量化时再把 FP4 值乘回同一个 scale。
 - 共享 scale 的意义是在保持 4-bit 存储成本较低的同时，让不同大小范围的小块分别选择不同单位，缓解普通 FP4 动态范围太窄的问题。
+
+## Session 29
+
+- 回答用户关于 DeepEP 的问题。
+- DeepEP 是 MoE expert parallel 场景下的 all-to-all/token shuffling 通信后端，在 SGLang 中通过 `--moe-a2a-backend deepep` 启用。
+- DeepEP 的核心流程是 dispatch -> local expert compute -> combine：按 router top-k 把 token 发到对应 expert 所在 rank，专家计算后再把结果聚合回原 token 顺序。
+- SGLang 的 `--deepep-mode auto` 会在 prefill/extend batch 使用 normal 模式，在 decode batch 使用 low_latency 模式；也可显式设置 `normal` 或 `low_latency`。
+- deepseek_v4 分支中启用 DeepEP 会将 `ep_size` 调整为 `tp_size`；DeepEP/Mooncake 当前只支持 `ep_size = tp_size` 的场景。
+- 代码入口包括 `layers/moe/token_dispatcher/deepep.py::DeepEPDispatcher` 和 `layers/moe/ep_moe/layer.py::DeepEPMoE`。

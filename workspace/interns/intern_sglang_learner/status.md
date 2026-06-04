@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 28 |
-| Recent Progress | 用数字例子补充解释 MXFP4 的 microscaling / shared scale |
+| Session | 29 |
+| Recent Progress | 介绍 DeepEP 在 SGLang MoE expert parallel 中的作用 |
