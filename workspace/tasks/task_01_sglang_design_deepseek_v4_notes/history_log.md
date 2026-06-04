@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=37 -->
+<!-- METADATA:SESSION=38 -->
 
 ## Session 0
 
@@ -272,3 +272,13 @@
 - `--enable-symm-mem` 也会使 `NCCL_NVLS_ENABLE=1`，并额外设置 `NCCL_CUMEM_ENABLE=1`。
 - NVLS 可理解为 NCCL 使用 NVLink/NVSwitch 相关优化路径来加速 GPU 间 collective 通信，主要影响 tensor parallel 等场景中的 all-reduce/all-gather 等通信，不改变模型输出。
 - 该优化依赖硬件、驱动、NCCL 版本和拓扑支持；不支持时通常不会带来收益，排障时也可通过显式环境变量覆盖。
+
+## Session 38
+
+- 回答用户关于 Piecewise CUDA Graph 的问题。
+- PCG 面向 extend/prefill：普通 CUDA graph 更适合 decode 的固定 batch shape，而 extend/prefill 的 token 数变化大，难以把整个 forward 作为一个固定 graph 捕获。
+- PCG 通过 `torch.compile`/Dynamo trace 模型 forward，把计算图按 split points 切成多个 piece；split op 子模块可 eager 执行，其余 capturable 子图由 `CUDAPiecewiseBackend` 包装。
+- `PiecewiseCudaGraphRunner` 生命周期为 compile、capture、replay：先 warmup/trace/split，再按预定义 token 数捕获 CUDA graph，运行时把实际 token 数 pad 到最近的已捕获大小并 replay。
+- 运行时如果实际 token 数超过最大 capture size，则回退普通 forward；PCG 不改变输出，只减少 prefill/extend 的 kernel launch overhead。
+- 当前任务 repo 中 PCG 已默认启用，使用 `--disable-piecewise-cuda-graph` 关闭；deepseek_v4 分支里仍是实验开关 `--enable-piecewise-cuda-graph`。
+- 相关参数包括 `--piecewise-cuda-graph-tokens`、`--piecewise-cuda-graph-max-tokens`、`--piecewise-cuda-graph-compiler` 和 `--enforce-piecewise-cuda-graph`。

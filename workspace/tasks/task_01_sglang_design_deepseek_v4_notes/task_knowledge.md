@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=37 -->
+<!-- METADATA:SESSION=38 -->
 
 ## 编写规则
 
@@ -59,3 +59,4 @@
 - deepseek_v4 分支的 Double Sparsity 是 decode attention 优化：用离线 heavy channel 配置先在低维 channel 上近似计算注意力并选 heavy tokens，再只对这些 token 的完整 K/V 做 sparse attention；短序列低于 `ds_sparse_decode_threshold` 会回退 dense decode。
 - Double Sparsity 的两层稀疏是级联叠加：channel sparsity 只用于全上下文近似打分和 token 筛选，最终 sparse attention 对入选 heavy tokens 使用完整 Q/K/V 维度。
 - `--enable-nccl-nvls` 会在 SGLang 启动时设置 `NCCL_NVLS_ENABLE=1`，让 NCCL 在支持的 GPU/NVLink/NVSwitch 拓扑上使用 NVLS 优化 collective 通信；`--enable-symm-mem` 也会隐式打开该环境变量。
+- Piecewise CUDA Graph 面向 extend/prefill：用 torch.compile trace 后按 split points 把 forward 拆成多个可捕获子图，对预定义 token 数分别 capture，运行时 pad 到最近 capture size 并 replay；超出最大 token size 时回退普通 forward。

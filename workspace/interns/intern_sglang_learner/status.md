@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 37 |
-| Recent Progress | 解释 `--enable-nccl-nvls` 对 NCCL NVLS 环境变量和 GPU collectives 的作用 |
+| Session | 38 |
+| Recent Progress | 解释 Piecewise CUDA Graph 在 extend/prefill 中按 token 分段捕获和 replay 的机制 |
