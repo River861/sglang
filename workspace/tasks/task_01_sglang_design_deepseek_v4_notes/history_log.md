@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=33 -->
+<!-- METADATA:SESSION=34 -->
 
 ## Session 0
 
@@ -234,3 +234,13 @@
 - `direct` 使用普通 CUDA memory copy/direct indexing 路径，部分布局下会把 device indices 转到 CPU；若 `hicache_mem_layout=page_first` 会自动切到 `page_first_direct`。
 - `kernel_ascend` 是 Ascend/NPU 专用路径；NPU 初始化 hierarchical cache 时会自动设置 `hicache_io_backend=kernel_ascend`，并配套 `page_first_direct` 或 `page_first_kv_split` 布局。
 - 兼容性处理：Mooncake storage backend 不支持 `layer_first`，会按 IO 后端把布局切到 `page_first` 或 `page_first_direct`；显式 FA3 decode backend 与 HiCache kernel IO 不兼容时会切到 `direct`。
+
+## Session 34
+
+- 回答用户关于 `--hicache-storage-prefetch-policy` 的问题。
+- 该参数控制 HiCache 从 L3 storage backend 预取 KV cache 时，prefill 是否等待预取以及等待到什么程度；只有启用 `--hicache-storage-backend` 后才有实际意义。
+- 可选值为 `best_effort`、`wait_complete`、`timeout`；deepseek_v4 分支默认 `best_effort`，当前任务 repo 源码默认 `timeout`。
+- `best_effort` 在 GPU 已可执行 prefill 时立即停止等待，已取回多少 KV 就用多少，TTFT 最低但 L3 命中收益较低。
+- `wait_complete` 等待所有预取操作完成再继续 prefill，缓存命中收益最高但会增加首 token 延迟。
+- `timeout` 在全部完成或达到线性 timeout 后停止等待，timeout 由 `prefetch_timeout_base + prefetch_timeout_per_ki_token * num_tokens / 1024` 控制，当前任务 repo 还支持 `prefetch_timeout_max` 上限。
+- storage backend runtime attach 接口也支持设置 `hicache_storage_prefetch_policy`，合法值同样为上述三种。
