@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 13 |
-| Recent Progress | 解释 NVIDIA ModelOpt 及其在 SGLang 中的量化用途 |
+| Session | 14 |
+| Recent Progress | 解释 SGLang ModelOpt 支持离线量化和在线量化两种模式 |
