@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=1 -->
+<!-- METADATA:SESSION=2 -->
 
 ## Session 0
 
@@ -20,3 +20,7 @@
 - 确认 API key/网关链路可用：`/health` 和 `/v1/models` 均正常，`claude-sonnet-4-6` 与 `claude-opus-4-7` 精确模型均能返回 `OK`。
 - 定位根因：`~/.claude/settings.json` 中 `"model": "opus"` 被 Claude Code 解析为 `claude-opus-4-8`，但当前网关模型列表没有该模型，返回 `model_not_found`，因此表现为长时间无响应。
 - 修复方式：将本机 `~/.claude/settings.json` 的默认模型改为网关支持的 `claude-opus-4-7`，并用默认 `claude -p` 复测返回 `OK`。
+
+## Session 2
+
+- 回答用户关于 SGLang 源码路径的问题：当前源码根目录为 `/work-agents/intern_sglang_learner/sglang/`。

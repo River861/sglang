@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 1 |
-| Recent Progress | 诊断并修复本机 Claude Code 默认模型解析到网关不支持版本导致的未响应问题 |
+| Session | 2 |
+| Recent Progress | 向用户确认 SGLang 源码根目录路径 |
