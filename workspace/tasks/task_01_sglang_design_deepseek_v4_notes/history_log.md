@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=34 -->
+<!-- METADATA:SESSION=35 -->
 
 ## Session 0
 
@@ -244,3 +244,13 @@
 - `wait_complete` 等待所有预取操作完成再继续 prefill，缓存命中收益最高但会增加首 token 延迟。
 - `timeout` 在全部完成或达到线性 timeout 后停止等待，timeout 由 `prefetch_timeout_base + prefetch_timeout_per_ki_token * num_tokens / 1024` 控制，当前任务 repo 还支持 `prefetch_timeout_max` 上限。
 - storage backend runtime attach 接口也支持设置 `hicache_storage_prefetch_policy`，合法值同样为上述三种。
+
+## Session 35
+
+- 回答用户关于 Double Sparsity 的问题。
+- deepseek_v4 分支中 Double Sparsity 是 decode attention 优化，通过 `--enable-double-sparsity` 启用；当前任务 repo 源码中未保留这组参数。
+- “Double” 指两级稀疏：先按离线 channel config 选择每层每头的 heavy channels，再用这些 channel 对全上下文 token 估计注意力分数并选 heavy tokens。
+- 启用后 `model_specific_adjustment()` 强制使用 `attention_backend=triton` 并禁用 CUDA graph，`attention_registry.py` 在 triton backend 下切到 `DoubleSparseAttnBackend`。
+- KV pool 使用 `DoubleSparseTokenToKVPool`，除完整 K/V 外额外保存 `label_buffer`，即每个 token 在 heavy channels 上的 key label。
+- decode 时短序列或 `max_seq_len < --ds-sparse-decode-threshold` 会回退 dense decode；长序列路径先用 `q_label @ k_label` 近似打分，`torch.topk(..., ds_heavy_token_num)` 选 token，再只对这些 token 的完整 K/V 做 sparse attention。
+- 相关参数包括 `--ds-channel-config-path`、`--ds-heavy-channel-num`、`--ds-heavy-token-num`、`--ds-heavy-channel-type`、`--ds-sparse-decode-threshold`。

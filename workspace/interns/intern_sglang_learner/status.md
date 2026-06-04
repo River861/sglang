@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 34 |
-| Recent Progress | 解释 `--hicache-storage-prefetch-policy` 的 L3 KV 预取停止策略 |
+| Session | 35 |
+| Recent Progress | 解释 deepseek_v4 分支 Double Sparsity attention 的 channel/token 双重稀疏机制 |
