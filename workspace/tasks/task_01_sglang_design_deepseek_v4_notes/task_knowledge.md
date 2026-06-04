@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=29 -->
+<!-- METADATA:SESSION=30 -->
 
 ## 编写规则
 
@@ -51,3 +51,4 @@
 - MXFP4 是 microscaling FP4：E2M1 FP4 数值按小 block 共享 E8M0 scale。SGLang 代码默认 block size 32，两个 FP4 packed 到一个 `uint8`，常用于 MoE expert 权重量化和 FlashInfer/DeepSeek/GPT-OSS MXFP4 kernel 路径。
 - MXFP4 的 shared scale 可理解为每 32 个数共用一个“单位”：先把原始数除以该单位压到 FP4 小值域，存储 FP4 小数值和一个 scale；使用时再用 `FP4_value * scale` 近似还原。
 - DeepEP 是 SGLang MoE expert parallel 的 A2A/token dispatcher 后端，通过 `--moe-a2a-backend deepep` 启用；核心流程为 dispatch token 到专家所在 rank、执行 local expert compute、combine 聚合结果，`--deepep-mode auto` 对 prefill 使用 normal、decode 使用 low_latency。
+- EP redundant expert 是 logical expert 的额外 physical replica：SGLang 用 `num_logical_experts + ep_num_redundant_experts` 建物理专家数，EPLB 复制热点专家并在 dispatch 阶段把 logical top-k expert id 映射到某个 physical copy，用于负载均衡而不是改变模型能力。

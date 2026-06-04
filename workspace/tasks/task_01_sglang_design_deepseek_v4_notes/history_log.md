@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=29 -->
+<!-- METADATA:SESSION=30 -->
 
 ## Session 0
 
@@ -198,3 +198,11 @@
 - SGLang 的 `--deepep-mode auto` 会在 prefill/extend batch 使用 normal 模式，在 decode batch 使用 low_latency 模式；也可显式设置 `normal` 或 `low_latency`。
 - deepseek_v4 分支中启用 DeepEP 会将 `ep_size` 调整为 `tp_size`；DeepEP/Mooncake 当前只支持 `ep_size = tp_size` 的场景。
 - 代码入口包括 `layers/moe/token_dispatcher/deepep.py::DeepEPDispatcher` 和 `layers/moe/ep_moe/layer.py::DeepEPMoE`。
+
+## Session 30
+
+- 回答用户关于 EP 中 redundant expert 的问题。
+- redundant expert 是对原有 logical expert 的额外 physical replica，不是新增不同专家；`ep_num_redundant_experts` 会让 `num_physical_experts = num_logical_experts + ep_num_redundant_experts`。
+- EPLB 根据 `tokens_per_expert` 等负载统计选择热点 logical expert 复制，并构建 `physical_to_logical_map` / `logical_to_all_physical_map`。
+- dispatch 阶段将 router 输出的 logical expert id remap 到 physical expert id；dynamic/fake 路径会在该 logical expert 的多个 physical copies 中选择一个。
+- 目的在于分摊热门 expert 的 token 流量、降低 GPU 闲置和负载不均；代价是额外显存和映射/调度复杂度。

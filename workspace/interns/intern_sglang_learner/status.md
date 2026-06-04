@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 29 |
-| Recent Progress | 介绍 DeepEP 在 SGLang MoE expert parallel 中的作用 |
+| Session | 30 |
+| Recent Progress | 解释 EP 中 redundant expert 的 logical/physical expert 映射与负载均衡作用 |
