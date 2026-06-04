@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=25 -->
+<!-- METADATA:SESSION=26 -->
 
 ## Session 0
 
@@ -166,3 +166,11 @@
 - 普通 speculative decoding 通常由 draft model 或模型内 MTP/EAGLE draft 路径先猜多个 token，再由 target model 一次 forward 验证。
 - NGRAM speculative decoding 不加载神经网络 draft model，而是通过 `NgramCache` 对当前上下文后缀做 ngram 匹配，取历史 continuation 作为候选 token tree，再由 target model 验证。
 - deepseek_v4 分支中 NGRAM 仅支持 CUDA，且会禁用 overlap scheduler 与 mixed chunked prefill；其参数主要是 `--speculative-ngram-*`。
+
+## Session 26
+
+- 回答用户关于 EAGLE 与 MTP 区别的问题。
+- EAGLE 是 speculative decoding 算法/服务端执行框架，负责 draft token 生成、token tree 组织、target model 验证与接受 token。
+- MTP 是 Multi-Token Prediction，指模型自身带有用于预测未来多个 token 的 draft 能力/权重模块，例如 DeepSeek 的 NextN/MTP 模块。
+- 在 SGLang DeepSeek 路径中，MTP 通过 `--speculative-algorithm EAGLE` 启用；`NEXTN` 会映射成 `EAGLE`，DeepSeek draft model path 未显式设置时会使用同一模型路径，并把 draft architecture 改写为 `DeepseekV3ForCausalLMNextN` 或 `DeepseekV4ForCausalLMNextN`。
+- 因此 MTP 是 draft token 的来源之一，EAGLE 是使用这些 draft token 并验证加速的算法路径。

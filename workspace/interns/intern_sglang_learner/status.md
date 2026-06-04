@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 25 |
-| Recent Progress | 解释普通 speculative decoding 与 NGRAM speculative decoding 的区别 |
+| Session | 26 |
+| Recent Progress | 解释 EAGLE speculative decoding 与 MTP 模型能力的区别 |
