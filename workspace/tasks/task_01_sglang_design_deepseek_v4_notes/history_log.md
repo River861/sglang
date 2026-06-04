@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=31 -->
+<!-- METADATA:SESSION=32 -->
 
 ## Session 0
 
@@ -216,3 +216,12 @@
 - `stat_approx` 在 DeepEP normal 路径直接用 dispatch 返回的 local physical expert count 做近似统计，小 batch 时代码提示优先考虑 `stat`。
 - `per_pass` 使用 detail accumulator 保存每个 forward pass 的聚合分布记录；`per_token` 还保存 input/position/forward_mode 和每层 token 的 top-k expert ids，细节最多、开销最大。
 - 记录控制入口包括 `/start_expert_distribution_record`、`/stop_expert_distribution_record`、`/dump_expert_distribution_record`，dump 目录由 `SGLANG_EXPERT_DISTRIBUTION_RECORDER_DIR` 控制，默认 `/tmp`。
+
+## Session 32
+
+- 回答用户关于 `--hicache-write-policy` 的问题。
+- 该参数控制 HiCache hierarchical cache 中 KV cache 从更快层级写入更慢层级的时机，默认 `write_through`，可选 `write_back`、`write_through`、`write_through_selective`。
+- `write_through` 在访问后立即把节点 backup/write 到下一层，当前代码的 `write_through_threshold=1`，缓存收益最强但 IO 压力最大。
+- `write_through_selective` 通过 hit count 只备份热点节点，当前代码阈值为 2，用于减少低复用 KV 的写入开销。
+- `write_back` 不在命中时写下层，只在上层节点被 eviction 时先 `write_backup(..., write_back=True)` 再 demote/evict，IO 最省但下层缓存可复用性更弱。
+- 当前源码中 HiCache 配置接口也允许运行时更新 `hicache_write_policy`，合法值同样限制为上述三种。
