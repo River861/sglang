@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=5 -->
+<!-- METADATA:SESSION=6 -->
 
 ## 编写规则
 
@@ -32,3 +32,4 @@
   - 核心模块逐文件笔记：https://feishu.cn/docx/Cg5bdBxyWourzrxKXzWctWKAnOg
   - DeepSeek V4 分支专项：https://feishu.cn/docx/GtLMdr4EvoSRaQxzS4zcGmrMnuh
 - 配合上述飞书笔记学习时，源码优先使用 `/work-agents/intern_sglang_learner/sglang_deepseek_v4/`，因为该 worktree 指向笔记基准 `origin/deepseek_v4 @ 1b497c7a0`；`/work-agents/intern_sglang_learner/sglang/` 用于任务记录和 PR 状态维护。
+- 熟悉仓库的第一步建议从 `python/sglang/launch_server.py` 开始，它是 server 启动入口，读它可以建立 CLI 参数、ServerArgs 和 HTTP server 启动链路的整体框架。

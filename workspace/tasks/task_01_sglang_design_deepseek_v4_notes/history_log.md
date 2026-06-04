@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=5 -->
+<!-- METADATA:SESSION=6 -->
 
 ## Session 0
 
@@ -40,3 +40,8 @@
 ## Session 5
 
 - 用户要求答复模式改为简洁版：默认只回复答案，不打印过程日志；项目强制的 Session checklist 仍需保留。
+
+## Session 6
+
+- 用户已进入 `/work-agents/intern_sglang_learner/sglang_deepseek_v4`，询问熟悉仓库的第一步。
+- 建议第一步阅读 `python/sglang/launch_server.py`，目标是先理解 SGLang server 启动入口如何解析参数并转入 SRT HTTP server。

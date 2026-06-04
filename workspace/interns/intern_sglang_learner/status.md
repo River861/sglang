@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 5 |
-| Recent Progress | 记录用户希望答复默认采用简洁版 |
+| Session | 6 |
+| Recent Progress | 引导用户从 launch_server.py 开始熟悉 SGLang 仓库 |
