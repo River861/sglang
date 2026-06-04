@@ -8,5 +8,5 @@
 | Status | Working |
 | Current Task | task_01_sglang_design_deepseek_v4_notes |
 | PR | https://github.com/River861/sglang/pull/1 |
-| Session | 19 |
-| Recent Progress | 解释 forward pass 与 token usage 在 SGLang 调度中的含义 |
+| Session | 20 |
+| Recent Progress | 解释 prefill delayer metrics histogram buckets 参数 |

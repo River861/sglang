@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=19 -->
+<!-- METADATA:SESSION=20 -->
 
 ## 编写规则
 
@@ -41,3 +41,4 @@
 - 2026-06-04 检查发现：Intern Agent Helper 1.6.0 已被 VS Code 识别为安装版本，但 1.6.0 `feishu_daemon.py` 会因 relay credentials HTTP 404 退出；为保持飞书通道可用，当前 daemon 回退运行 1.5.3。
 - `--enable-prefill-delayer` 启用 `managers/prefill_delayer.py::PrefillDelayer`，在 DP attention 下跨 DP rank 协商是否允许 prefill；mixed prefillable 状态会延迟 prefill，等待 rank 对齐，以减少 prefill idle，最多延迟 `--prefill-delayer-max-delay-passes`。
 - SGLang 中 forward pass 可理解为一次 scheduler batch 的模型前向执行；token usage 是 token/KV cache 池占用率，普通路径由 `_get_token_info()` 计算为 `num_used / max_total_num_tokens`。
+- `--prefill-delayer-forward-passes-buckets` 和 `--prefill-delayer-wait-seconds-buckets` 只配置 PrefillDelayer metrics histogram 分桶；前者统计等待的 forward pass 数，后者统计等待秒数，不改变调度决策。

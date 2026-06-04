@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes History
 
-<!-- METADATA:SESSION=19 -->
+<!-- METADATA:SESSION=20 -->
 
 ## Session 0
 
@@ -121,3 +121,10 @@
 - forward pass 指模型执行一次前向计算；在 SGLang scheduler 中可理解为一次调度出来的 batch 被送进模型跑一轮，prefill 可能处理一段 prompt token，decode 通常为每个活跃请求生成下一个 token。
 - token usage 指 token/KV cache 池占用比例，普通路径中计算为 `num_used / max_total_num_tokens`，其中 `num_used = max_total_num_tokens - (available_size + evictable_size)`。
 - 在 prefill delayer 中，`max_delay_passes` 是最多延迟多少个模型前向轮次；`token_usage_low_watermark` 是当 KV/token 池占用率很低时允许不再延迟 prefill。
+
+## Session 20
+
+- 回答用户关于 `--prefill-delayer-forward-passes-buckets` 和 `--prefill-delayer-wait-seconds-buckets` 的问题。
+- 两个参数只配置 Prometheus histogram 分桶，用于观测 PrefillDelayer 等了多少 forward pass、等了多少秒，不直接改变 prefill delayer 的放行/延迟决策。
+- forward passes 默认 buckets 为 `[5, 20, 50, 100, 200]`，会过滤掉 `>= max_delay_passes` 的值，并自动加入 `0` 和 `max_delay_passes - 1`。
+- wait seconds 默认 buckets 为 `[1, 2, 5, 10, 20, 50, 100, 200, 500]`，并自动加入 `0`。
