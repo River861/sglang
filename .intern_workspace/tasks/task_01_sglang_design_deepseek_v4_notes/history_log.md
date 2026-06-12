@@ -19,3 +19,4 @@
 - 读取 learner 的旧 `workspace/tasks/task_00_update_plugin` 和远端分支 `origin/intern_sglang_learner/task_01_sglang_design_deepseek_v4_notes`，确认 `task_01_sglang_design_deepseek_v4_notes` 是需要接手的主要上下文。
 - 尝试通过 peer-send 请求 learner 交接摘要，daemon 返回 `session_not_running`；随后用 tmux pane 残留输出补充最近上下文：最近一次问答聚焦 `http_server.py` 中 `obj` 与 `request` 参数来源、FastAPI 注入、`GenerateReqInput` 和 `TokenizerManager.generate_request` 的断连检查。
 - 在新版 `.intern_workspace/tasks/` 下创建本任务接手记录，并将 assignee 切换为 `intern_sglang_guider`。
+- 创建接手 PR：https://github.com/River861/sglang/pull/2
