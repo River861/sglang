@@ -1,13 +1,13 @@
 # intern_sglang_guider - 状态
 
-<!-- METADATA:STATUS=Idle,TASK=,ROLE=independent,TEAM_ID= -->
+<!-- METADATA:STATUS=Working,TASK=task_01_sglang_design_deepseek_v4_notes,ROLE=independent,TEAM_ID= -->
 
 | 字段 | 值 |
 |------|-----|
 | Name | intern_sglang_guider |
-| Status | Idle |
+| Status | Working |
 | Role | independent |
 | Team | N/A |
-| Current Task |  |
-| PR | N/A |
-| Session | 0 |
+| Current Task | task_01_sglang_design_deepseek_v4_notes |
+| PR | pending |
+| Session | 1 |
