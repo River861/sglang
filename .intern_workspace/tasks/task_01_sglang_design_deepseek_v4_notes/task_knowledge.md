@@ -1,6 +1,6 @@
 # task_01_sglang_design_deepseek_v4_notes Knowledge
 
-<!-- METADATA:SESSION=39 -->
+<!-- METADATA:SESSION=40 -->
 
 ## 编写规则
 
@@ -11,6 +11,7 @@
 ## 交接上下文
 
 - learner 的正式状态在 2026-06-12 查询为 Idle；主要任务上下文不在其当前 status，而在远端分支 `origin/intern_sglang_learner/task_01_sglang_design_deepseek_v4_notes` 的旧 `workspace/tasks/` metadata 中。
+- 2026-06-12 再次复核：`intern_sglang_learner` 仍为 Idle、无当前 task；如清理该 agent，应使用 `internctl delete intern_sglang_learner --project sglang --confirm`，不要手动删 runtime 或 metadata 目录。
 - 飞书文档产出：
   - 索引：https://feishu.cn/docx/MK7HdqZiaouoMtxbLFGczumvnCh
   - 总览与请求调用链：https://feishu.cn/docx/RMYfdhZVyoKeBCxgZpWck2innWh
